@@ -15,28 +15,46 @@ export default {
   }
 }
 </script>
+
 <style lang="scss">
 @import '@/assets/styles/main.scss';
 
 body {
-  margin: 0px;
+  margin: 0;
 }
 
 nav {
   background-color: black;
   height: 3rem;
-}
+  display: flex;
+  align-items: center;
 
-.navbar-icon {
-  width: 2rem;
-  height: 2rem;
-  position: relative;
-  top: 0.5rem;
-  left: 0.5rem;
-}
+  .router-link {
+    color: black;
+    text-decoration: none;
+  }
 
-.navbar-mainicon {
-  font-family: 'Changa';
-  font-weight: bold;
+  .nav-mainIcon {
+    font-family: Changa;
+    font-weight: bold;
+    font-size: 2rem;
+
+    a {
+      color: #BBA8FF;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active,
+    a:focus {
+      color: #BBA8FF;
+      text-decoration: none;
+    }
+  }
+
+  .search-bar {
+    margin-left: 1rem;
+    /* Add your search-bar styles here */
+  }
 }
 </style>
