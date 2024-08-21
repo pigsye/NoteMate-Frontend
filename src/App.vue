@@ -1,30 +1,42 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <span class="nav-link nav-mainIcon"><router-link to="/">NoteMate</router-link></span>
+    <input class="search-bar">
+    <router-view/>
   </nav>
-  <router-view/>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
- 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+export default {
+  data () {
+    return {
+      name: 'Issac'
     }
   }
+}
+</script>
+<style lang="scss">
+@import '@/assets/styles/main.scss';
+
+body {
+  margin: 0px;
+}
+
+nav {
+  background-color: black;
+  height: 3rem;
+}
+
+.navbar-icon {
+  width: 2rem;
+  height: 2rem;
+  position: relative;
+  top: 0.5rem;
+  left: 0.5rem;
+}
+
+.navbar-mainicon {
+  font-family: 'Changa';
+  font-weight: bold;
 }
 </style>
