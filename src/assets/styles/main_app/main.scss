@@ -1,4 +1,5 @@
-$themed_color: #BBA8FF;
-
+@import 'colors';
 @import '../fonts';
-@import 'header';
+@import 'header_desktop';
+@import 'header_mobile';
+@import 'homepage'

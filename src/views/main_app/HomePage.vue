@@ -1,15 +1,16 @@
 <template>
-  <div>
-    <h1>Welcome to the Home Page</h1>
-    <p>This is the main content of the home page.</p>
+  <div class="main-app">
+    <div class="left-side">
+    </div>
+    <div class="right-side">
+
+    </div>
   </div>
 </template>
 
 <script>
 </script>
 
-<style lang="scss" scoped>
-  div {
-    display: block;
-  }
+<style lang="scss">
+
 </style>

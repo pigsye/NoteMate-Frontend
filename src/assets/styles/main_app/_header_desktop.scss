@@ -1,0 +1,108 @@
+body {
+  margin: 0;
+}
+
+header {
+  width: 100vw;
+}
+@media (min-width: 780px) {
+  nav {
+    .desktop-site {
+      background-color: $themed_color_2;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      width: 100vw;
+    
+      .router-link {
+        color: black;
+        text-decoration: none;
+      }
+    
+      .nav-mainIcon {
+        font-size: 2rem;
+        width: 20%;
+        text-align: center;
+    
+        a {
+          color: $themed_color_1;
+          text-decoration: none;
+          font-family: Changa;
+          font-weight: bold;
+        }
+    
+        a:hover,
+        a:active,
+        a:focus {
+          color: $themed_color_1;
+          text-decoration: none;
+          font-family: Changa;
+          font-weight: bold;
+        }
+      }
+    
+      .search-bar {
+        width: 60%;
+        
+        input {
+          width: 4/6*100%;
+          margin-left: 1/60*100%;
+          margin-right: 1/60*100%;
+          border-radius: 1rem;
+          height: 1.5rem;
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+        }
+    
+        button {
+          margin-right: 0px;
+          margin-left: auto;
+          background-color: $themed_color_1;
+          border-radius: 2rem;
+          height: 2rem;
+          width: 5rem;
+
+          img {
+            width: 2rem;
+            height: 2rem;
+          }
+        }
+      }
+    
+      .right-bar {
+        margin-left: auto;
+        margin-right: 1rem;
+        display: flex;
+        align-items: center;
+    
+        .settings-icon {
+          width: 2rem;
+          height: 2rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 0.5rem;
+    
+          img {
+            width: 2rem;
+            height: 2rem;
+          }
+        }
+    
+        .profile-picture {
+          width: 2rem;
+          height: 2rem;
+          border-radius: 50%;
+          border: 2px $themed_color_1 solid;
+          background-color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+  .mobile-site {
+    display: none;
+  }
+}
