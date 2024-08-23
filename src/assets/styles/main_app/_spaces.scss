@@ -1,0 +1,23 @@
+.spaces {
+    .selected {
+        background-color: $themed_color_1;
+    }
+    div {
+        width: 100%;
+    }
+    h1 {
+        font-size: 1.5rem;
+        color: white;
+        margin: 0px;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        padding-left: 0.5rem;
+        overflow: scroll;
+        white-space: nowrap;
+    }
+
+    .title {
+        font-style: italic;
+        font-weight: bold;
+    }
+}
