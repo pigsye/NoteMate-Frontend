@@ -2,7 +2,9 @@
   <div class="NotesEditor">
     <div class="notes">
       <h1 class="topic-name">{{ info.topic }}</h1>
-      <div class="notes-editor"></div>
+      <div class="notes-editor">
+        <EditorContent :editor="editor" class="editor-content"></EditorContent>
+      </div>
     </div>
     <div class="toolbar">
       <div class="section-one">
@@ -57,13 +59,42 @@
 </template>
 
 <script>
+import { Color } from '@tiptap/extension-color'
+import ListItem from '@tiptap/extension-list-item'
+import TextStyle from '@tiptap/extension-text-style'
+import StarterKit from '@tiptap/starter-kit'
+import { Editor, EditorContent } from '@tiptap/vue-3'
+
 export default {
   name: 'NotesEditor',
+  components: {
+    EditorContent
+  },
+  data () {
+    return {
+      editor: null
+    }
+  },
   props: {
     info: {
       type: Object,
       required: true
     }
+  },
+  mounted () {
+    this.editor = new Editor({
+      extensions: [
+        Color.configure({ types: [TextStyle.name, ListItem.name] }),
+        TextStyle.configure({ types: [ListItem.name] }),
+        StarterKit
+      ],
+      content: `
+        <p> meow </p>
+      `
+    })
+  },
+  beforeUnmount () {
+    this.editor.destroy()
   }
 }
 </script>

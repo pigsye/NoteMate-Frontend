@@ -18,6 +18,16 @@
 
         .notes-editor {
             min-height: calc(100vh - 5.5rem);
+            
+            .editor-content {
+                color: white;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .ProseMirror {
+                outline: none;
+                min-height: calc(100vh - 5.5rem);
+            }
         }
     }
 
