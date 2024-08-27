@@ -7,12 +7,14 @@
       </div>
     </div>
     <div class="right-side">
+      <NotesEditor :info="notesInfo" />
     </div>
   </div>
 </template>
 
 <script>
 import SpacesComponent from '@/components/main_app/SpacesComponent.vue'
+import NotesEditor from '@/components/main_app/NotesEditor.vue'
 
 export default {
   data () {
@@ -23,11 +25,15 @@ export default {
           name: 'Space 1',
           selected: ''
         }
+      },
+      notesInfo: {
+        topic: 'Cells'
       }
     }
   },
   components: {
-    SpacesComponent
+    SpacesComponent,
+    NotesEditor
   }
 }
 </script>
