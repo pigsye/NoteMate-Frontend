@@ -40,19 +40,33 @@
           <button class="align-center"><img src="@/assets/icons/align_center.svg" /></button>
           <button class="align-right"><img src="@/assets/icons/align_right.svg" /></button>
         </div>
-        </div>
+      </div>
       <div class="section-four">
-        <button class="bold active"><img src="@/assets/icons/bold.svg" /></button>
-        <button class="itailcs active"><img src="@/assets/icons/itailcs.svg" /></button>
-        <button class="underline"><img src="@/assets/icons/underline.svg" /></button>
-        <button class="text-color active"><img src="@/assets/icons/text_color.svg" /></button>
+        <button
+          class="bold"
+          :class="{ active: isBoldActive }"
+          @click="toggleBold">
+          <img src="@/assets/icons/bold.svg" />
+        </button>
+        <button
+          class="italics"
+          :class="{ active: isItalicActive }"
+          @click="toggleItalic">
+          <img src="@/assets/icons/italics.svg" />
+        </button>
+        <button
+          class="underline"
+          :class="{ active: isUnderlineActive }"
+          @click="toggleUnderline">
+          <img src="@/assets/icons/underline.svg" /></button>
+        <button class="text-color"><img src="@/assets/icons/text_color.svg" /></button>
         <button class="highlight-color"><img src="@/assets/icons/highlight_color.svg" /></button>
       </div>
       <div class="section-five">
         <button class="link"><img src="@/assets/icons/link.svg" /></button>
         <button class="image"><img src="@/assets/icons/image.svg" /></button>
         <button class="unordered-lists"><img src="@/assets/icons/unordered_list.svg" /></button>
-        <button class="ordered-lists active"><img src="@/assets/icons/ordered_list.svg" /></button>
+        <button class="ordered-lists"><img src="@/assets/icons/ordered_list.svg" /></button>
       </div>
     </div>
   </div>
@@ -62,6 +76,7 @@
 import { Color } from '@tiptap/extension-color'
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
+import Underline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
 import { Editor, EditorContent } from '@tiptap/vue-3'
 
@@ -86,15 +101,46 @@ export default {
       extensions: [
         Color.configure({ types: [TextStyle.name, ListItem.name] }),
         TextStyle.configure({ types: [ListItem.name] }),
+        Underline,
         StarterKit
       ],
       content: `
-        <p> meow </p>
+      <p> meow </p>
       `
     })
   },
   beforeUnmount () {
-    this.editor.destroy()
+    if (this.editor) {
+      this.editor.destroy()
+    }
+  },
+  computed: {
+    isBoldActive () {
+      return this.editor && this.editor.isActive('bold')
+    },
+    isItalicActive () {
+      return this.editor && this.editor.isActive('italic')
+    },
+    isUnderlineActive () {
+      return this.editor && this.editor.isActive('underline')
+    }
+  },
+  methods: {
+    toggleBold () {
+      if (this.editor) {
+        this.editor.chain().focus().toggleBold().run()
+      }
+    },
+    toggleItalic () {
+      if (this.editor) {
+        this.editor.chain().focus().toggleItalic().run()
+      }
+    },
+    toggleUnderline () {
+      if (this.editor) {
+        this.editor.chain().focus().toggleUnderline().run()
+      }
+    }
   }
 }
 </script>

@@ -28,6 +28,10 @@
                 outline: none;
                 min-height: calc(100vh - 5.5rem);
             }
+
+            strong {
+                font-weight: bold;
+            }
         }
     }
 
@@ -132,10 +136,6 @@
                             padding: 0px;
                         }
                     }
-                }
-
-                .not-text-size {
-
                 }
             }
         }
