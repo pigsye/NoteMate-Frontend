@@ -8,7 +8,6 @@
     </div>
     <div class="toolbar">
       <div class="section-one">
-        <button class="search"><img src="@/assets/icons/search.svg" /></button>
         <button class="undo"><img src="@/assets/icons/undo.svg" /></button>
         <button class="redo"><img src="@/assets/icons/redo.svg" /></button>
         <button class="print"><img src="@/assets/icons/print.svg" /></button>
@@ -22,42 +21,45 @@
           <button class="zoom-out"><img src="@/assets/icons/zoom_out.svg" /></button>
         </div>
         <div class="font-size">
-          <div class="font-size-2">
             <input class="font-size-input" type="number">
-            <button class="not-like-the-other-buttons"><img src="@/assets/icons/dropdown.svg" /></button>
-         </div>
         </div>
       </div>
       <div class="section-three">
         <div class="text-size">
           <div class="text-size-2">
               <input class="text-size-input">
-              <button class="not-like-the-other-buttons"><img src="@/assets/icons/dropdown.svg" /></button>
+              <button class="not-like-the-other-buttons" @click="showHeaders = !showHeaders" :class="{ active: showHeaders }">
+                <img src="@/assets/icons/dropdown.svg" />
+              </button>
           </div>
         </div>
         <div class="not-text-size">
-          <button class="align-left"><img src="@/assets/icons/align_left.svg" /></button>
-          <button class="align-center"><img src="@/assets/icons/align_center.svg" /></button>
-          <button class="align-right"><img src="@/assets/icons/align_right.svg" /></button>
+          <button class="align-left" :class=" {active: isTextAlignLeft }" @click="alignTextLeft">
+            <img src="@/assets/icons/align_left.svg" />
+          </button>
+          <button class="align-center" :class=" {active: isTextAlignCenter }" @click="alignTextCenter">
+            <img src="@/assets/icons/align_center.svg" />
+          </button>
+          <button class="align-right" :class=" {active: isTextAlignRight }" @click="alignTextRight">
+            <img src="@/assets/icons/align_right.svg" />
+          </button>
         </div>
       </div>
+      <div class="section-three-point-five" v-if="showHeaders">
+        <h1 class="heading-title" :class="{ active: isHeader1Active }" @click="setHeader1">Heading 1</h1>
+        <h2 class="heading-title" :class="{ active: isHeader2Active }" @click="setHeader2">Heading 2</h2>
+        <h3 class="heading-title" :class="{ active: isHeader3Active }" @click="setHeader3">Heading 3</h3>
+        <h4 class="heading-title" :class="{ active: isHeader4Active }" @click="setHeader4">Heading 4</h4>
+        <p class="heading-title" :class="{ active: isParagraphActive }" @click="setParagraph">Paragraph</p>
+      </div>
       <div class="section-four">
-        <button
-          class="bold"
-          :class="{ active: isBoldActive }"
-          @click="toggleBold">
+        <button class="bold" :class="{ active: isBoldActive }" @click="toggleBold">
           <img src="@/assets/icons/bold.svg" />
         </button>
-        <button
-          class="italics"
-          :class="{ active: isItalicActive }"
-          @click="toggleItalic">
+        <button class="italics" :class="{ active: isItalicActive }" @click="toggleItalic">
           <img src="@/assets/icons/italics.svg" />
         </button>
-        <button
-          class="underline"
-          :class="{ active: isUnderlineActive }"
-          @click="toggleUnderline">
+        <button class="underline" :class="{ active: isUnderlineActive }" @click="toggleUnderline">
           <img src="@/assets/icons/underline.svg" /></button>
         <button class="text-color"><img src="@/assets/icons/text_color.svg" /></button>
         <button class="highlight-color"><img src="@/assets/icons/highlight_color.svg" /></button>
@@ -75,6 +77,7 @@
 <script>
 import { Color } from '@tiptap/extension-color'
 import ListItem from '@tiptap/extension-list-item'
+import TextAlign from '@tiptap/extension-text-align'
 import TextStyle from '@tiptap/extension-text-style'
 import Underline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
@@ -87,7 +90,8 @@ export default {
   },
   data () {
     return {
-      editor: null
+      editor: null,
+      showHeaders: false
     }
   },
   props: {
@@ -101,6 +105,7 @@ export default {
       extensions: [
         Color.configure({ types: [TextStyle.name, ListItem.name] }),
         TextStyle.configure({ types: [ListItem.name] }),
+        TextAlign.configure({ types: ['heading', 'paragraph'] }),
         Underline,
         StarterKit
       ],
@@ -123,6 +128,30 @@ export default {
     },
     isUnderlineActive () {
       return this.editor && this.editor.isActive('underline')
+    },
+    isParagraphActive () {
+      return this.editor && this.editor.isActive('paragraph')
+    },
+    isHeader1Active () {
+      return this.editor && this.editor.isActive('heading', { level: 1 })
+    },
+    isHeader2Active () {
+      return this.editor && this.editor.isActive('heading', { level: 2 })
+    },
+    isHeader3Active () {
+      return this.editor && this.editor.isActive('heading', { level: 3 })
+    },
+    isHeader4Active () {
+      return this.editor && this.editor.isActive('heading', { level: 4 })
+    },
+    isTextAlignRight () {
+      return this.editor && this.editor.isActive('textAlign', { textAlign: 'right' })
+    },
+    isTextAlignLeft () {
+      return this.editor && this.editor.isActive('textAlign', { textAlign: 'left' })
+    },
+    isTextAlignCenter () {
+      return this.editor && this.editor.isActive('textAlign', { textAlign: 'center' })
     }
   },
   methods: {
@@ -139,6 +168,46 @@ export default {
     toggleUnderline () {
       if (this.editor) {
         this.editor.chain().focus().toggleUnderline().run()
+      }
+    },
+    setParagraph () {
+      if (this.editor) {
+        this.editor.chain().focus().setParagraph().run()
+      }
+    },
+    setHeader1 () {
+      if (this.editor) {
+        this.editor.chain().focus().toggleHeading({ level: 1 }).run()
+      }
+    },
+    setHeader2 () {
+      if (this.editor) {
+        this.editor.chain().focus().toggleHeading({ level: 2 }).run()
+      }
+    },
+    setHeader3 () {
+      if (this.editor) {
+        this.editor.chain().focus().toggleHeading({ level: 3 }).run()
+      }
+    },
+    setHeader4 () {
+      if (this.editor) {
+        this.editor.chain().focus().toggleHeading({ level: 4 }).run()
+      }
+    },
+    alignTextRight () {
+      if (this.editor) {
+        this.editor.chain().focus().setTextAlign('right').run()
+      }
+    },
+    alignTextCenter () {
+      if (this.editor) {
+        this.editor.chain().focus().setTextAlign('center').run()
+      }
+    },
+    alignTextLeft () {
+      if (this.editor) {
+        this.editor.chain().focus().setTextAlign('left').run()
       }
     }
   }
