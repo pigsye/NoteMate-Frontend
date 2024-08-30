@@ -20,6 +20,7 @@
     "@tiptap/starter-kit": "^2.6.6",
     "@tiptap/vue-3": "^2.6.6",
     "core-js": "^3.8.3",
+    "tiptap-extension-font-size": "^1.2.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "yjs": "^13.6.18"

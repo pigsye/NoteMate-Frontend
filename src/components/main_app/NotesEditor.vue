@@ -21,13 +21,13 @@
           <button class="zoom-out"><img src="@/assets/icons/zoom_out.svg" /></button>
         </div>
         <div class="font-size">
-            <input class="font-size-input" type="number">
+            <input class="font-size-input" type="number" v-model="fontSize" @keyup.enter="applyFontSize" min="8" max="72"/>
         </div>
       </div>
       <div class="section-three">
         <div class="text-size">
           <div class="text-size-2">
-              <input class="text-size-input">
+              <input class="text-size-input" :value="currentHeader" readonly>
               <button class="not-like-the-other-buttons" @click="showHeaders = !showHeaders" :class="{ active: showHeaders }">
                 <img src="@/assets/icons/dropdown.svg" />
               </button>
@@ -67,8 +67,12 @@
       <div class="section-five">
         <button class="link"><img src="@/assets/icons/link.svg" /></button>
         <button class="image"><img src="@/assets/icons/image.svg" /></button>
-        <button class="unordered-lists"><img src="@/assets/icons/unordered_list.svg" /></button>
-        <button class="ordered-lists"><img src="@/assets/icons/ordered_list.svg" /></button>
+        <button class="unordered-lists" :class="{ active: isBulletList }" @click="toggleBulletList">
+          <img src="@/assets/icons/unordered_list.svg" />
+        </button>
+        <button class="ordered-lists" :class="{ active: isOrderedList }" @click="toggleOrderedList">
+          <img src="@/assets/icons/ordered_list.svg" />
+        </button>
       </div>
     </div>
   </div>
@@ -79,6 +83,7 @@ import { Color } from '@tiptap/extension-color'
 import ListItem from '@tiptap/extension-list-item'
 import TextAlign from '@tiptap/extension-text-align'
 import TextStyle from '@tiptap/extension-text-style'
+import FontSize from 'tiptap-extension-font-size'
 import Underline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
 import { Editor, EditorContent } from '@tiptap/vue-3'
@@ -91,7 +96,9 @@ export default {
   data () {
     return {
       editor: null,
-      showHeaders: false
+      showHeaders: false,
+      currentHeader: 'P',
+      fontSize: 16
     }
   },
   props: {
@@ -104,7 +111,8 @@ export default {
     this.editor = new Editor({
       extensions: [
         Color.configure({ types: [TextStyle.name, ListItem.name] }),
-        TextStyle.configure({ types: [ListItem.name] }),
+        TextStyle,
+        FontSize,
         TextAlign.configure({ types: ['heading', 'paragraph'] }),
         Underline,
         StarterKit
@@ -152,6 +160,12 @@ export default {
     },
     isTextAlignCenter () {
       return this.editor && this.editor.isActive('textAlign', { textAlign: 'center' })
+    },
+    isBulletList () {
+      return this.editor && this.editor.isActive('bulletList')
+    },
+    isOrderedList () {
+      return this.editor && this.editor.isActive('orderedList')
     }
   },
   methods: {
@@ -173,26 +187,36 @@ export default {
     setParagraph () {
       if (this.editor) {
         this.editor.chain().focus().setParagraph().run()
+        this.editor.chain().focus().setFontSize('1em').run()
+        this.currentHeader = 'P'
       }
     },
     setHeader1 () {
       if (this.editor) {
         this.editor.chain().focus().toggleHeading({ level: 1 }).run()
+        this.editor.chain().focus().setFontSize('2em').run()
+        this.currentHeader = 'H1'
       }
     },
     setHeader2 () {
       if (this.editor) {
         this.editor.chain().focus().toggleHeading({ level: 2 }).run()
+        this.editor.chain().focus().setFontSize('1.5em').run()
+        this.currentHeader = 'H2'
       }
     },
     setHeader3 () {
       if (this.editor) {
         this.editor.chain().focus().toggleHeading({ level: 3 }).run()
+        this.editor.chain().focus().setFontSize('1.17em').run()
+        this.currentHeader = 'H3'
       }
     },
     setHeader4 () {
       if (this.editor) {
         this.editor.chain().focus().toggleHeading({ level: 4 }).run()
+        this.editor.chain().focus().setFontSize('1em').run()
+        this.currentHeader = 'H4'
       }
     },
     alignTextRight () {
@@ -208,6 +232,21 @@ export default {
     alignTextLeft () {
       if (this.editor) {
         this.editor.chain().focus().setTextAlign('left').run()
+      }
+    },
+    toggleBulletList () {
+      if (this.editor) {
+        this.editor.chain().focus().toggleBulletList().run()
+      }
+    },
+    toggleOrderedList () {
+      if (this.editor) {
+        this.editor.chain().focus().toggleOrderedList().run()
+      }
+    },
+    applyFontSize () {
+      if (this.editor && this.fontSize) {
+        this.editor.chain().focus().setFontSize(`${this.fontSize}px`).run()
       }
     }
   }
