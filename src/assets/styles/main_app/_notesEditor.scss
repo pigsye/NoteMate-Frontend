@@ -37,6 +37,12 @@
                 margin-top: 5px;
                 margin-bottom: 0px;
             }
+
+            mark {
+                background-color: transparent; /* Remove the default yellow background */
+                color: inherit; /* Ensure text color is inherited */
+                padding: 0; /* Remove any default padding */
+            }
         }
     }
 
@@ -159,6 +165,72 @@
                         background-color: $themed_color_3;
                     }
                 }
+            }
+
+            &.section-four-point-five, &.section-four-point-seven-five {
+                display: flex;
+                flex-wrap: wrap;
+                height: 6rem;
+
+                button {
+                    width: 2rem;
+                    height: 2rem;
+                    margin: auto;
+
+                    &.active {
+                        border: 2px solid black;
+                    }
+
+                    &:first-of-type {
+                        margin-left: 1/32 * 100%;
+                    }
+    
+                    &:last-of-type {
+                        margin-right: 1/32 * 100%;
+                    }
+
+                    &.red {
+                        background-color: #FF6347;
+                    }
+
+                    &.yellow {
+                        background-color: #FFD700;
+                    }
+
+                    &.green {
+                        background-color: #008000;
+                    }
+
+                    &.purple {
+                        background-color: #9370DB;
+                    }
+
+                    &.blue {
+                        background-color: #0000FF;
+                    }
+
+                    &.white {
+                        background-color: #FFFFFF;
+                    }
+
+                    &.black {
+                        background-color: #000000;
+                    }
+
+                    &.pink {
+                        background-color: #FF00FF;
+                    }
+
+                    &.aqua {
+                        background-color: #00FFFF;
+                    }
+
+                    &.lime {
+                        background-color: #32CD32;
+                    }
+                }
+
+
             }
         }
     }
