@@ -254,4 +254,26 @@
             width: 30%;
         }
     }
+    .y-cursor {
+        border-left: 1px solid #58a6ff;
+        margin-left: -1px;
+        position: relative;
+        pointer-events: none;
+      }
+      
+      .y-cursor > div {
+        background-color: #58a6ff;
+        position: absolute;
+        top: -1.05em;
+        left: -1px;
+        color: white;
+        font-size: 13px;
+        font-family: sans-serif;
+        padding: 0 2px;
+        white-space: nowrap;
+      }
+      
+      .y-cursor-selection {
+        background-color: rgba(88, 166, 255, 0.5);
+      }
 }

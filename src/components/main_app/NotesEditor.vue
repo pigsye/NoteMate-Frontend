@@ -8,10 +8,18 @@
     </div>
     <div class="toolbar">
       <div class="section-one" v-if="isEditable">
-        <button class="undo"><img src="@/assets/icons/undo.svg" /></button>
-        <button class="redo"><img src="@/assets/icons/redo.svg" /></button>
-        <button class="print"><img src="@/assets/icons/print.svg" /></button>
-        <button class="spellcheck"><img src="@/assets/icons/spellcheck.svg" /></button>
+        <button class="undo" @click="undoAction">
+          <img src="@/assets/icons/undo.svg" />
+        </button>
+        <button class="redo" @click="redoAction">
+          <img src="@/assets/icons/redo.svg" />
+        </button>
+        <button class="print" @click="downloadAsPDF">
+          <img src="@/assets/icons/print.svg" />
+        </button>
+        <button class="spellcheck" @click="toggleSpellcheck" :class="{ active: isSpellcheckEnabled }">
+          <img src="@/assets/icons/spellcheck.svg" />
+        </button>
       </div>
       <div class="section-two" v-if="isEditable">
         <div class="not-font-size">
@@ -133,6 +141,7 @@ import Underline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
 import { Editor, EditorContent } from '@tiptap/vue-3'
+import html2pdf from 'html2pdf.js'
 
 export default {
   name: 'NotesEditor',
@@ -147,7 +156,8 @@ export default {
       fontSize: 16,
       isEditable: true,
       showTextColors: false,
-      showHighlightColors: false
+      showHighlightColors: false,
+      isSpellcheckEnabled: true
     }
   },
   props: {
@@ -414,6 +424,40 @@ export default {
           .setParagraph()
           .run()
       }
+    },
+    undoAction () {
+      if (this.editor) {
+        this.editor.chain().focus().undo().run()
+      }
+    },
+    redoAction () {
+      if (this.editor) {
+        this.editor.chain().focus().redo().run()
+      }
+    },
+    downloadAsPDF () {
+      const content = this.editor.getHTML()
+      const header = `<h1>${this.info.topic}</h1>`
+      const fullContent = `<div>${header}${content}</div>`
+
+      // Create a temporary element to hold the content
+      const element = document.createElement('div')
+      element.innerHTML = fullContent
+
+      const options = {
+        margin: 1,
+        filename: `${this.info.topic}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      }
+
+      html2pdf().from(element).set(options).save()
+    },
+    toggleSpellcheck () {
+      this.isSpellcheckEnabled = !this.isSpellcheckEnabled
+      const editorContent = this.$el.querySelector('.editor-content')
+      editorContent.setAttribute('spellcheck', this.isSpellcheckEnabled)
     }
   }
 }
