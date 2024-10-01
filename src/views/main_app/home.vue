@@ -1,5 +1,9 @@
 <template>
-  <RouterLink to="/app">A</RouterLink>
+  <div class="header">
+    <h1>NoteMate</h1>
+    <router-link to="/login">Log-In</router-link>
+    <router-link to="/logout">Log-Out</router-link>
+  </div>
 </template>
 
 <script>

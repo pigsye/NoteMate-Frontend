@@ -183,9 +183,7 @@ export default {
         Underline,
         StarterKit
       ],
-      content: `
-      <p> meow </p>
-      `,
+      content: this.info.notesContent,
       editable: true // Ensure that the editor starts in edit mode
     })
 
